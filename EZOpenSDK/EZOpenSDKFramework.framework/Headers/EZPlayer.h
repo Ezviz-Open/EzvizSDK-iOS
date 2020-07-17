@@ -11,6 +11,8 @@
 @class EZDeviceRecordFile;
 @class EZCloudRecordFile;
 @class EZPlayer;
+@class EZPlayerExParamInfo;
+
 /**
  *  预览清晰度
  */
@@ -34,6 +36,8 @@ typedef NS_ENUM(NSInteger, EZMessageCode) {
     PLAYER_PLAYBACK_PAUSE = 14,       //录像回放暂停
     PLAYER_NET_CHANGED = 21,          //播放器检测到wifi变换过
     PLAYER_NO_NETWORK = 22,           //播放器检测到无网络
+    PLAYER_CLOUD_IFRAME_CHANGED = 23, //云存储快放时，由全帧快放切换到抽帧快放的提示回调
+    PLAYER_PLAYSPEED_LOWER = 24,      //云存储快放时的降速通知(存在两次降速：当前倍速大于4倍速时，降到4倍速；当前为4倍速时，降为1倍速)
 };
 
 
@@ -155,14 +159,14 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
 - (int) getHDPriorityStatus;
 
 /**
- *  设置设备归属业务来源，需要在预览回放前调用  UIKit使用
+ *  设置设备归属业务来源，需要在预览回放前调用  国标设备使用
  *
  *  @param bizType 类型       国标为 bizType='GB28181'
  */
 -(void)setBizType:(NSString *)bizType;
 
 /**
- *  平台id UIKit使用
+ *  平台id 国标设备使用
  *
  *  @param platformId 类型
 */
@@ -339,23 +343,21 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
 - (int) getStreamFetchType;
 
 /**
- SD卡回放专用接口，倍数回放，支持的倍速需要设备支持
- 1.支持抽帧快放的设备最高支持16倍速快放（所有取流方式，包括P2P）
- 2.不支持抽帧快放的设备，仅支持内外网直连快放，最高支持8倍
- 3.HCNetSDK取流没有快放概念，全速推流，只改变播放库速率
- 
- @param rate 回放倍率，见EZPlaybackRate
- @return YES/NO
- */
-- (BOOL) setPlaybackRate:(EZPlaybackRate) rate;
+sd卡及云存储倍速回放接口
+1.支持抽帧快放的设备最高支持16倍速快放（所有取流方式，包括P2P）
+2.不支持抽帧快放的设备，仅支持内外网直连快放，最高支持8倍
+3.HCNetSDK取流没有快放概念，全速推流，只改变播放库速率
+4.注意区别：
+   老SD卡回放以及HCNetSDK回放，设置完通过返回值返回成功还是失败，没有其他消息
+   新协议的云存储回放以及支持seek、continue的设备d新SD卡回放，设置完通过返回值返回成功还是失败，如果成功，
+   则后续还有一条EZVideoPlayerMessageStart异步消息表示成功再次取流
+   返回其他错误码表示失败 (新协议云存储和新SD卡回放返回EZ_ERROR_NEED_RETRY 表示需要重试）
 
-/**
- 云存储回放专用接口，倍数回放
- 
- @param rate 回放倍率，见EZCloudPlaybackRate,目前云存储支持1、4、8、16、32倍数
- @return YES/NO
+@param rate    回放速度，具体参考 EZ_PLAY_BACK_RATE
+@param mode 回放时的抽帧控制，当前仅云存储支持。0： 4倍速全帧，8倍速以上抽帧   1：抽帧   2：全帧  （如设备回放当前不支持，传入0即可）
+@return YES/NO
  */
-- (BOOL) setCloudPlaybackRate:(EZPlaybackRate) rate;
+- (BOOL) setPlaybackRate:(EZPlaybackRate) rate mode:(NSUInteger)mode;
 
 /**
  设置全双工对讲时的模式,对讲成功后调用
@@ -363,6 +365,10 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
  @param routeToSpeaker YES:使用扬声器 NO:使用听筒
  */
 - (void) changeTalkingRouteMode:(BOOL) routeToSpeaker;
+
+/// //扩展参数 UIKit专用
+/// @param exParamInfo EZPlayerExParamInfo
+- (void) setExParamInfo:(EZPlayerExParamInfo *) exParamInfo;
 
 @end
 
