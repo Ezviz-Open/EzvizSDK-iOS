@@ -36,7 +36,7 @@
  *  初始化接口，可设置服务器，海外用户使用该初始化方法
  *
  *  @param appKey 传入申请的appKey
- *  @param url apiUrl地址
+ *  @param apiUrl apiUrl地址
  *  @param authUrl auth地址
  *
  *  @return YES/NO
