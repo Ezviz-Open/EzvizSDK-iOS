@@ -814,4 +814,16 @@
                                 platFormId:(NSString *)platFormId
                                 completion:(void (^)(id records, NSError *error))completion;
 
+#pragma mark - v4.16 多方音视频
+/// 创建会议信息
+/// @param password 自定义密码
+/// @param completion operation
++ (void)requestCallingMeetingInfo:(NSString *)password
+                       completion:(void (^)(int32_t roomId, NSString *vtmAddress, NSError *error))completion;
+
+/// 加入方获取会议信息
+/// @param roomId  房间号
+/// @param completion operation
++ (void)requestCalledMeetingInfo:(NSString *)roomId
+                      completion:(void (^)(int32_t roomId, NSString *vtmAddress, NSError *error))completion;
 @end

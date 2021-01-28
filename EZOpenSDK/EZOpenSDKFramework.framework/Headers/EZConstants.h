@@ -143,9 +143,9 @@ typedef NS_ENUM(NSInteger, EZErrorCode) {
 /* WiFi配置设备状态 */
 typedef NS_ENUM(NSInteger, EZWifiConfigStatus) {
     DEVICE_WIFI_CONNECTING = 1,   //设备正在连接WiFi
-    DEVICE_WIFI_CONNECTED = 2,    //设备连接WiFi成功
+    DEVICE_WIFI_CONNECTED = 2,    //设备连接WiFi成功  (已废弃 v4.16.0)
     DEVICE_PLATFORM_REGISTED = 3, //设备注册平台成功
-    DEVICE_ACCOUNT_BINDED = 4     //设备已经绑定账户
+    DEVICE_ACCOUNT_BINDED = 4     //设备已经绑定账户  (已废弃 v4.16.0)
 };
 
 /* 设备ptz命令 */

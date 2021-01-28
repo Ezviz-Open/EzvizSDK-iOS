@@ -234,11 +234,18 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
 - (NSInteger) getStreamFlow;
 
 /**
- *  开始对讲，异步接口，返回值只是表示操作成功，不代表播放成功
+ *  开始TTS对讲，异步接口，返回值只是表示操作成功，不代表播放成功
  *
  *  @return YES/NO
  */
 - (BOOL)startVoiceTalk;
+
+/**
+ *  开始Qos对讲，异步接口，返回值只是表示操作成功，不代表播放成功
+ *
+ *  @return YES/NO
+ */
+- (BOOL)startVoiceTalkByQos;
 
 /**
  *  停止对讲，异步接口，返回值只是表示操作成功

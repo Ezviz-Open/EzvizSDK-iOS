@@ -16,4 +16,8 @@
 /// 设备录像文件的结束时间
 @property (nonatomic, strong) NSDate *stopTime;
 
+@property (nonatomic, assign) int type;
+@property (nonatomic, copy) NSString *channelType;
+
+
 @end
