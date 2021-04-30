@@ -123,6 +123,47 @@ SDK初始化
  */
 - (int32_t)switchCamera:(BOOL)backCameraSelected;
 
+/// 开始房间视频会议录制
+/// @param roomId 房间号
+/// @param customId 开发者自定义用户ID
+/// @param recUsers 需要录制的房间参与者id
+/// @param projectId 云存储项目ID
+/// @param fileId 云存储文件名
+/// @param completion operation
++ (void)requestStartRecordRoomId:(NSString *)roomId
+                        customId:(NSInteger)customId
+                        recUsers:(NSArray *)recUsers
+                       projectId:(NSString *)projectId
+                          fileId:(NSString *)fileId
+                      completion:(void (^)(bool success, NSError *error))completion;
+
+/// 停止房间视频会议录制
+/// @param roomId 房间号
+/// @param customId 开发者自定义用户ID
+/// @param completion operation
++ (void)requestStopRecordRoomId:(NSString *)roomId
+                       customId:(NSInteger)customId
+                     completion:(void (^)(bool success, NSError *error))completion;
+
+/// 获取文件下载地址
+/// @param projectId 项目ID
+/// @param fileId 文件ID
+/// @param completion operation
++ (void)requestGetRecordFileProjectId:(NSString *)projectId
+                                                 fileId:(NSString *)fileId
+                                         completion:(void (^)(id responseObject, NSError *error))completion;
+
+
+/// 新建项目接口
+/// @param projectId 项目ID
+/// @param projectName 项目名称
+/// @param expireDays 项目存储对象过期天数 默认永不过期
+/// @param completion operation
++ (void)requestCreateProjectId:(NSString *)projectId
+                          projectName:(NSString *)projectName
+                           expireDays:(NSInteger )expireDays
+                    completion:(void (^)(bool success, NSError *error))completion;
+
 #pragma mark - 日志调试
 /**
  日志设置

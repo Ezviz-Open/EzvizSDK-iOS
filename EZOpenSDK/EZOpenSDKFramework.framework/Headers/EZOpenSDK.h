@@ -817,13 +817,17 @@
 #pragma mark - v4.16 多方音视频
 /// 创建会议信息
 /// @param password 自定义密码
+/// @param customId 开发者自定义用户ID
 /// @param completion operation
 + (void)requestCallingMeetingInfo:(NSString *)password
-                       completion:(void (^)(int32_t roomId, NSString *vtmAddress, NSError *error))completion;
+                         customId:(NSInteger)customId
+                       completion:(void (^)(int32_t roomId, NSString *vtmAddress ,NSString *clientid ,NSInteger customId, NSError *error))completion;
 
 /// 加入方获取会议信息
 /// @param roomId  房间号
+/// @param customId 开发者自定义用户ID
 /// @param completion operation
 + (void)requestCalledMeetingInfo:(NSString *)roomId
-                      completion:(void (^)(int32_t roomId, NSString *vtmAddress, NSError *error))completion;
+                        customId:(NSInteger)customId
+                       completion:(void (^)(int32_t roomId, NSString *vtmAddress,NSString *clientid ,NSInteger customId, NSError *error))completion;
 @end

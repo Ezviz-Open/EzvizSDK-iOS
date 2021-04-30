@@ -33,6 +33,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL isMultiPartyCall; //是否是多方通话
 @property (nonatomic, assign) BOOL isCallingWithDevice; //是否是带有设备的主叫方（多方通话）
 
+@property (nonatomic, assign) int32_t iClientId; 
+
 @end
 
 NS_ASSUME_NONNULL_END
